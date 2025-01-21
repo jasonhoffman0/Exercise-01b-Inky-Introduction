@@ -1,17 +1,36 @@
-/*
-This is a comment block. It won't be read as an Ink story.
-Comments are very useful for leaving ideas for story and functionalty
+-> court_back
 
-This exercise will demonstrate the following in the example video:
- - Basic Choices
- - Knot structure
- - Recurring choices
- - Conditionals in descriptions
- - Conditionals in choices
+== court_back ==
+You're at the back of the court. {has_basketball: In your hands is the basketball.} What will you do?
+ + [Move Up] -> court_back_mid
+ + {not has_basketball} [Call for basketball] -> basketball_called_for
+
+== court_back_mid ==
+You're at the back-middle of the court. {has_basketball: In your hands is the basketball.} What will you do?
+ + [Move Up] -> court_front_mid
+ + {not has_basketball} [Call for basketball] -> basketball_called_for
+
+== court_front_mid
+You're at the front-middle of the court. {has_basketball: In your hands is the basketball.} What will you do?
+ + [Move Up] -> court_front
+ + {not has_basketball} [Call for basketball] -> basketball_called_for
+
+== court_front ==
+You're at the back-middle of the court. {has_basketball: In your hands is the basketball.} What will you do?
+ + [Move Back] -> court_front_mid
+ + {not has_basketball} [Call for basketball] -> basketball_called_for
  
- In the assignment:
- - Add four more knots (and feel free to change any of the example text, this is YOUR story)
- - Add at least one more conditional
-*/
-
-This is our basic story example! Goodbye!
+ == basketball_called_for ==
+ ~ temp chance = RANDOM(1, 10)
+ {  chance > 3:
+        The basketball is passed to you.
+        + [Catch the basketball] -> has_basketball
+        
+    - else:
+        You're ignored by your teammate.
+        + [Resume playing] -> court_back
+ }
+ 
+ === has_basketball ===
+ You're now holding the basketball
+ * [Begin dribbling] -> court_back
